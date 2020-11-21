@@ -1,4 +1,4 @@
-<img src="\images\aristotle-uni-logo.png" alt="Aristotle University Logo" style="zoom:20%;" />
+<img src="/images/aristotle-uni-logo.png" alt="Aristotle University Logo" style="zoom:20%;" />
 
 [TOC]
 
@@ -25,7 +25,7 @@ Dataset at file:
 
 Speaker recognition is the identification of a person based on the characteristics of his voice. There are two categories of speaker recognition: speaker identification and speaker verification. 
 
-<img src="images\dataset\img2.1.png" alt="img2.1" style="zoom: 60%;" />
+<img src="images/dataset/img2.1.png" alt="img2.1" style="zoom: 60%;" />
 
 <u>Speaker identification is used to identify the speaker.</u> The model chooses from a collection of a known voice set. There are two types of the application above. The first one is the identification of a closed speaker set. In that case all speakers are known to the system. The second is the identification of an open speaker set that includes previously unknown speakers. Regarding the closed set, a voice from a currently unknown speaker is analyzed by the system and is then compared to the stored speakers. The speaker is classified regarding to the one with the best features.
 
@@ -57,11 +57,11 @@ In order to be able to use the dataset files properly the audio clips must be jo
 
 As mentioned above, VoxCeleb includes small audio files of about 8 seconds each as shown in the photo below. Audio files are sampled at 16,000 Hz.
 
-<img src="\images\dataset\img3.1.png" alt="img3.1" style="zoom:67%;" />
+<img src="/images/dataset/img3.1.png" alt="img3.1" style="zoom:67%;" />
 
 In order to create a 45 second wav training set and a 15 second testing set respectively, the wav files must be merged together. For this purpose, the Audacity tool was used, which is a free simple audio editing software.
 
-<img src="\images\dataset\img3.2.png" alt="img3.2" style="zoom:67%;" />
+<img src="/images/dataset/img3.2.png" alt="img3.2" style="zoom:67%;" />
 
 As shown in the screenshot above, this software is used to merge individual wav files into one file that will be used for training. The desired final training audio size should be between 50 and 60 seconds as the total duration will decrease after passing through VAD. In this way, files are created for 10 random speakers, which include a 60-second audio (~ 50 seconds after VAD) for training and 20-second files (~ 15 seconds after VAD for assessment.
 
