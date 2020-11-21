@@ -1,6 +1,5 @@
-<img src="/images/aristotle-uni-logo.png" alt="Aristotle University Logo" style="zoom:20%;" />
 
-[TOC]
+<img width=66% align="center" src="/images/aristotle-uni-logo.png" alt="Aristotle University Logo"  />
 
 # Automatic speaker recognition & verification
 
@@ -11,6 +10,7 @@ Automatic Speaker Recognition is the process of identifying a speaker based on s
 ## Contents
 
 Source code at file:
+
 Dataset at file:
 
 ## Contributors
@@ -25,7 +25,7 @@ Dataset at file:
 
 Speaker recognition is the identification of a person based on the characteristics of his voice. There are two categories of speaker recognition: speaker identification and speaker verification. 
 
-<img src="images/dataset/img2.1.png" alt="img2.1" style="zoom: 60%;" />
+<img src="images/dataset/img2.1.png" alt="img2.1" width=66% />
 
 <u>Speaker identification is used to identify the speaker.</u> The model chooses from a collection of a known voice set. There are two types of the application above. The first one is the identification of a closed speaker set. In that case all speakers are known to the system. The second is the identification of an open speaker set that includes previously unknown speakers. Regarding the closed set, a voice from a currently unknown speaker is analyzed by the system and is then compared to the stored speakers. The speaker is classified regarding to the one with the best features.
 
@@ -57,17 +57,13 @@ In order to be able to use the dataset files properly the audio clips must be jo
 
 As mentioned above, VoxCeleb includes small audio files of about 8 seconds each as shown in the photo below. Audio files are sampled at 16,000 Hz.
 
-<img src="/images/dataset/img3.1.png" alt="img3.1" style="zoom:67%;" />
+<img src="/images/dataset/img3.1.png" alt="img3.1" width=66% />
 
 In order to create a 45 second wav training set and a 15 second testing set respectively, the wav files must be merged together. For this purpose, the Audacity tool was used, which is a free simple audio editing software.
 
-<img src="/images/dataset/img3.2.png" alt="img3.2" style="zoom:67%;" />
+<img src="/images/dataset/img3.2.png" alt="img3.2" width=66% />
 
-As shown in the screenshot above, this software is used to merge individual wav files into one file that will be used for training. The desired final training audio size should be between 50 and 60 seconds as the total duration will decrease after passing through VAD. In this way, files are created for 10 random speakers, which include a 60-second audio (~ 50 seconds after VAD) for training and 20-second files (~ 15 seconds after VAD for assessment.
-
-<img src="images\dataset\img3.3.png" alt="img3.3" style="zoom:50%;" />
-
-The files are organized in folders as in the image above so that they can be executed in MATLAB. The testing set is placed in a corresponding test folder.
+As shown in the screenshot above, this software is used to merge individual wav files into one file that will be used for training. The desired final training audio size should be between 50 and 60 seconds as the total duration will decrease after passing through VAD. In this way, files are created for 10 random speakers, which include a 60-second audio (~ 50 seconds after VAD) for training and 20-second files (~ 15 seconds after VAD for assessment).The files are organized in folders as in the image above so that they can be executed in MATLAB. The testing set is placed in a corresponding test folder.
 
 Feature_extraction.m is the feature extraction function and will be discussed below. Then each file goes through VAD (the implementation and operation of VAD will be analyzed below) and then it is ready for use in MATLAB. For organization purposes and recognition of audio files, their name consists of five digits where the first indicates whether the file is intended for training (1) or for testing (2). The second digit indicates whether the file has passed VAD (1) or not (0) and the other three digits are the speaker id from VoxCeleb.
 
@@ -91,32 +87,29 @@ In this application VAD was implemented using the parameters STE (short time ene
 
 More specifically, regarding the STE parameter, the speech signal consists of voice and silence areas. Furthermore, the energy associated with the vocal area is large compared to the silent area, which will have minimal or negligible energy. Thus, short-term energy can be used for speech, noise and silence.
 
-$$
-E_n = \sum_{m=n-N+1}^{n} x^2(m) = x^2(n-N+1)+...+x^2(n)
-$$
+<img src="images/equations/eq1.png" alt="equation1" width=50% />
+
 In the expression above E represents energy of the signal x (m). There is little or no effectiveness of this definition for time-varying signals, such as speech. Therefore we divide our signal into small "windows" whose energy is calculated as follows:
 
-$$
-E_n = \sum_{m=n-N+1}^{n} [x(m)w(n-m)]^2
-$$
+<img src="images/equations/eq2.png" alt="equation2" width=50% />
+
 Where w (n-m) is the time window, n is the sample in which the analysis window is centered, and N is the window length. High energy will be classified as vocal while low energy will be classified as non-vocal.
 
-<img src="images\dataset\img3.4.png" alt="img3.4" style="zoom: 67%;" />
+<img src="images/dataset/img3.4.png" alt="img3.4" width=66% />
 
 Short Term Autocorellation is then defined as:
 
-$$
-R_n(k) = \sum_{m=0}^{m=N-1-k} [x(n+m)w'(m)][x(n+m+k)w'(k+m)]
-$$
+<img src="images/equations/eq3.png" alt="equation3" width=50% />
+
 This expression represents the autocorrelation of a speech segment with a specified window length. If the window size decreases the STA effect weakens. The vocal sector would be periodic and the non-vocal sector would be non-periodic in short-term autocorrelation.
 
-<img src="images\dataset\img3.5.png" alt="img3.5" style="zoom:67%;" />
+<img src="images/dataset/img3.5.png" alt="img3.5" width=66% />
 
 Having settled on the parameters to be used, we followed tests on speech signals. In these tests we defined thresholds, in which each parameter had correct results. These tests also revealed the weakness of the ZCR which had different results depending on the audio signal while at the same time the others produced stable and satisfactory results.
 
 In conclusion, the combination of these 2 parameters with the use of the correct thresholds resulted in the removal of silence from the signals and kept only the parts to which the respective speaker was speaking.
 
-<img src="images\dataset\img3.6.png" alt="img3.6" style="zoom:67%;" />
+<img src="images/dataset/img3.6.png" alt="img3.6" width=66% />
 
 At this point we will analyze the 2 functions used to load the audio in Matlab and create recordings with features for each audio window. These are the **generate_dataset** and **feature_extraction** functions respectively.
 
@@ -160,27 +153,26 @@ A key point in speech recognition is the features, extracted from the audio sign
 
 **Zero Crossing Rate:**  The zero-crossing rate is the rate of sign-changes along a signal, i.e., the rate at which the signal changes from positive to zero to negative or from negative to zero to positive, in a given time-window.
 
-<img src="images\features\2.7.png" alt="2.7" style="zoom:67%;" />
+<img src="images/features/2.7.png" alt="2.7" width=66% />
 
 **Roughness:** It is an estimation of the sensory dissonance, or roughness, related to the beating phenomenon whenever pair of sinusoids are closed in frequency (critical band).
 
 **Brightness:** This feature sets a cutoff frequency and calculates the percentage of energy above that frequency. Then its results is normalized and take values between 0 and 1. It was used with 15 different cut-off frequencies from 500 Hz to 7500 Hz with a step of 500 Hz.  At this point we should remember that the maximum frequency of audio files is 8000 Hz (due to sampling frequency of 16 kHz). In this way we manage to have a very good picture of how the energy of each window is distributed with respect to frequency.
 
-<img src="\images\features\img3.8.png" alt="img3.8" style="zoom:67%;" />
+<img src="/images/features/img3.8.png" alt="img3.8" width=66% />
 
 **Roll-off:** Corresponding to the previous one, a frequency is returned so that a part of the total energy of the respective time window is below this frequency. The percentage of energy is set by the user. It is a way to estimate the amount of high frequencies in the signal. As the table above indicates, 9 different percentages of energy were used, some targeting lower (close to 30%) and some higher targets (close to 90%), as suggested by Tzanetakis and Cook, 2002. However, in many experiments with machine learning algorithms the weight of the lower percentages of energy was higher than that of the higher ones.
 
-<img src="images\features\img3.9.png" alt="img3.9" style="zoom:67%;" />
+<img src="images/features/img3.9.png" alt="img3.9" width=66% />
 
 **Irregularity**:  The irregularity of a spectrum is the degree of variation of the successive peaks of the spectrum. The formula below was used:
-$$
-\frac{\sum_{k=1}^{N} (a_κ - a_{k+1})}{\sum_{k=1}^{N} a_κ^2}
-$$
+
+<img src="images/equations/eq4.png" alt="equation4" width=50% />
 
 
 **Mel Frequency Cepstral Coefficient (MFCC):**The MFCC feature extraction technique is relatively easy to apply, not complicated at all and gives very good results, which is why it is the most common one. It is based on the spectral content of the voice signal, as it is recognized by human hearing. According to psychoacoustic research the human perception of the frequencies of a voice signal does not follow a linear scale. Thus, for every tone with real frequency f measured in Hz, there is a subjective tone on the mel scale, which will be analyzed below. The following figure shows the steps to extract the MFCCs. 
 
-<img src="images\features\3.10.png" alt="3.10" style="zoom:67%;" />
+<img src="images/features/3.10.png" alt="3.10" width=66% />
 
 
 
@@ -197,7 +189,7 @@ Fast Fourier Transform is applied to each of these windows and is multiplied by 
 $$
 Mel(f)=2595log(1+\frac{f}{700})
 $$
-<img src="images\features\3.11.png" alt="3.11" style="zoom:67%;" />
+<img src="images\features\3.11.png" alt="3.11" width=66% />
 
 
 
@@ -393,3 +385,30 @@ In the results paragraph, a table is presented that contains for each point of t
 
 - Expand the number of speakers by adding audio files from others Vox Celeb speakers
 - GUI development of the application
+
+### References
+
+[1] Sadaoki Furui, Speaker recognition, Scholarpedia, 2008
+
+[2] Ravi Ramachandran, Modern Methods of Speech Processing, Richard Mammone, 6 December 2012.
+
+[3] Jalil, M., Butt, F. A., & Malik, A. " Short-time energy, magnitude, zero crossing rate and autocorrelation measurement for discriminating voiced and unvoiced segments of speech signals." 2013 The International Conference on Technological Advances in Electrical, Electronics and Computer Engineering (TAEECE), 2013
+
+[4] Image Kazi Mahmudul Hassan1, Ekramul Hamid2 , Khademul Islam Molla, "A Method for Voiced/Unvoiced Classification of Noisy Speech by Analyzing Time-Domain Features of Spectrogram. " , 2017
+
+[5] Bachu R.G., Kopparthi S., Adapa B., Barkana B.D. Separation of Voiced and Unvoiced using Zero crossing rate and Energy of the Speech Signal Electrical Engineering Department School of Engineering, University of Bridgeport, 2017
+
+[6]Vassilakis, Panteleimon Nestor, "Auditory Roughness as Means of Musical Expression". Selected Reports in Ethnomusicology, 2005
+
+[7] Tzanetakis και Cook, "Musical genre classification of audio signals", IEEE Transactions on Speech and Audio Processing, 2002
+
+[8] Kristoffer Jensen, "Irregularities, Noise and Random Fluctuations in Musical Sounds", JMM – The Journal of Music and Meaning, 2004
+
+[9] Parwinder Pal Singh, Pushpa Rani, "An Approach to Extract Feature using MFCC", 2014
+
+[10] C. Sunitha, E. Chandra, "Speaker Recognition using MFCC and Improved Weighted Vector Quantization Algorithm", International Journal of Engineering and Technology (IJET), 2015
+
+[11] Christopher Harte and Mark Sandler, "Detecting Harmonic Change In Musical Audio", 2010
+
+[12] Kenji Kira, Larry A, Rendell, “The Feature Selection Problem: Traditional Methodds and New Algorithm”, Proceeding of the Eighth International Workshop on Machine Learning, 1992
+
